@@ -160,6 +160,10 @@ const fullDepMessage = (latestVersions$1, currentDependenciesVersions$1) => {
 const distDir = fileURLToPath(new URL("../dist/public", import.meta.url));
 const createHostServer = () => {
 	const app = new H3();
+	app.use("/message/**", eventHandler(() => {
+		console.log("message");
+		return { message: "hello world" };
+	}));
 	app.use("/**", eventHandler(async (event) => {
 		const result = await serveStatic(event, {
 			fallthrough: true,
@@ -178,13 +182,10 @@ const createHostServer = () => {
 			}
 		});
 		if (!result) {
+			console.log("没有找到", event.req.url);
 			event.res.headers.set("Content-Type", "text/html;charset=UTF-8");
 			return readFileSync(join(distDir, "index.html"), "utf-8");
 		} else return result;
-	}));
-	app.get("/message", eventHandler(() => {
-		console.log("message");
-		return { message: "hello world" };
 	}));
 	serve(app, { port: 3e3 });
 };

@@ -10,9 +10,16 @@ import { lookup } from 'mrmime';
 const distDir = fileURLToPath(new URL('../dist/public', import.meta.url))
 const createHostServer = () => {
   const app = new H3()
+app.use('/message/**', eventHandler(() => {
+    console.log('message')
+    return {
+      message: 'hello world'
+    }
+  }))
   app.use('/**', eventHandler(async (event) => {
     // const requestUrl = event.req.url
     const result = await serveStatic(event, {
+      // root:distDir,
       fallthrough: true,
       getContents: id => {
         console.log(id,'id')
@@ -34,6 +41,7 @@ const createHostServer = () => {
     })
   
     if (!result) {
+      console.log('没有找到',event.req.url)
       // 设置头
       event.res.headers.set("Content-Type", "text/html;charset=UTF-8");
       //  返回join(distDir, 'index.html')的内容
@@ -41,15 +49,11 @@ const createHostServer = () => {
     }else {
       return result
     }
+
   })
 
   )
-  app.get('/message', eventHandler(() => {
-    console.log('message')
-    return {
-      message: 'hello world'
-    }
-  }))
+  
   serve(app, { port: 3000 });
 }
 

@@ -8,6 +8,7 @@
   // 发送请求
   onMounted(()=> {
     console.log(123)
+    console.log(fetch)
     // 访问
     fetch('/message').then(res => res.json()).then(data => {
       console.log(data)
