@@ -7,13 +7,15 @@ import { join } from 'pathe'
 import { readFile, stat } from 'node:fs/promises'
 import { readFileSync } from 'node:fs'
 import { lookup } from 'mrmime';
+import type { DependencyVersion } from './types'
 const distDir = fileURLToPath(new URL('../dist/public', import.meta.url))
-const createHostServer = () => {
+const createHostServer = (latestVersions: DependencyVersion[]) => {
   const app = new H3()
 app.use('/message/**', eventHandler(() => {
-    console.log('message')
+    console.log('message',latestVersions)
     return {
-      message: 'hello world'
+      code:200,
+      message: latestVersions
     }
   }))
   app.use('/**', eventHandler(async (event) => {

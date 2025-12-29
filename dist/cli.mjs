@@ -158,11 +158,14 @@ const fullDepMessage = (latestVersions$1, currentDependenciesVersions$1) => {
 //#endregion
 //#region src/server.ts
 const distDir = fileURLToPath(new URL("../dist/public", import.meta.url));
-const createHostServer = () => {
+const createHostServer = (latestVersions$1) => {
 	const app = new H3();
 	app.use("/message/**", eventHandler(() => {
-		console.log("message");
-		return { message: "hello world" };
+		console.log("message", latestVersions$1);
+		return {
+			code: 200,
+			message: latestVersions$1
+		};
 	}));
 	app.use("/**", eventHandler(async (event) => {
 		const result = await serveStatic(event, {
@@ -210,7 +213,8 @@ let latestVersions = [];
 cli.command("depth", "深度查询依赖，会列出所有依赖的依赖").action(async () => {
 	if (currentDependenciesVersions.length === 0) try {
 		latestVersions = (await getVersionInfo(packageJson)).dependenciesVersions;
-		createHostServer();
+		console.log(latestVersions, "depth");
+		createHostServer(latestVersions);
 	} catch (error) {
 		console.log(chalk.red("获取依赖版本信息失败"));
 		process$1.exit(1);
