@@ -17,5 +17,11 @@
     {
       "path": "./tsconfig.cli.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./app/*"]
+    }
+  }
 }

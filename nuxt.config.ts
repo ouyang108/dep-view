@@ -1,14 +1,21 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
-  
+  modules: ['@nuxt/icon'],
+  devServer:{
+    port: 3001,
+    // 代理
+  },
+  css: ['~/assets/css/main.css'],
   devtools: { enabled: true },
-  
+  // 修改启动的端口号
   nitro: {
     preset: 'static',
     output: {
       dir: './dist',
     },
+   
   },
   //   app: {
   //   baseURL: './',
@@ -20,7 +27,9 @@ export default defineNuxtConfig({
   //     // title: 'ESLint Config Inspector',
   //   },
   // },
-  // vite: {
-  //   base: './',
-  // },
+  vite: {
+    plugins: [
+            tailwindcss(),
+        ],
+  },
 })

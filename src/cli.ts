@@ -35,7 +35,7 @@ cli.command('depth',"深度查询依赖，会列出所有依赖的依赖").actio
    if(currentDependenciesVersions.length === 0) {
     try {
       latestVersions = (await getVersionInfo(packageJson)).dependenciesVersions;
-      console.log(latestVersions,'depth');
+      //单独做处理
       createHostServer(latestVersions)
     } catch (error) {
       console.log(chalk.red("获取依赖版本信息失败"));
@@ -49,7 +49,7 @@ cli
    console.log('all')
     try {
       latestVersions = (await getVersionInfo(packageJson)).dependenciesVersions;
-      console.log(latestVersions,'all');
+      createHostServer(latestVersions)
     } catch (error) {
       console.log(chalk.red("获取依赖版本信息失败"));
       process.exit(1);

@@ -1,7 +1,7 @@
 // 启动一个服务
 import { createServer } from 'node:http'
 // import { createNitro } from 'nitro'imimport { resolve } from 'node:path'
-import { H3, eventHandler, serveStatic, serve } from 'h3'
+import { H3, eventHandler, serveStatic, serve, createRouter, handleCors } from 'h3'
 import { fileURLToPath } from 'node:url'
 import { join } from 'pathe'
 import { readFile, stat } from 'node:fs/promises'
@@ -11,6 +11,8 @@ import type { DependencyVersion } from './types'
 const distDir = fileURLToPath(new URL('../dist/public', import.meta.url))
 const createHostServer = (latestVersions: DependencyVersion[]) => {
   const app = new H3()
+
+ 
 app.use('/message/**', eventHandler(() => {
     console.log('message',latestVersions)
     return {
