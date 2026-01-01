@@ -1,5 +1,5 @@
 <template>
-    <header class="bg-white shadow-sm px-6 py-4 sticky top-0 z-10">
+    <header class="bg-white shadow-sm px-6 py-4 sticky top-0 z-10 mb-4">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold text-neutral-800 flex items-center">
                 包依赖管理工具
