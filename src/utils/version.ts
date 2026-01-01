@@ -1,6 +1,7 @@
 import { exec } from "node:child_process";
 import type { ExecException } from "node:child_process";
-
+import { resolve } from "node:dns";
+import semver from 'semver';
 /**
  * 单个包信息查询（内部方法，无加载）
  * @param dependency 包名
@@ -117,7 +118,42 @@ const findLatestVersionsAndUrls = async (dependencies: string[]): Promise<Record
   });
 };
 
+
+
+
+
+
+/**
+ * 比较当前版本是否为最新版本
+ * @param {string} currentVersion - 当前版本（如 ^1.3.1-beta.6、^1.3.14）
+ * @param {string} latestVersion - npm 最新版本（如 1.3.2、2.3.3）
+ * @returns {object} { isLatest: 是否最新, compareResult: 比较结果（-1/0/1）, currentClean: 清理后的当前版本 }
+ */
+// function compareVersionIsLatest(name:string) {
+ 
+//   return new Promise((resolve) => {
+//     exec(`npm outdated ${name} --json`, (error, stdout, stderr) => {
+//       if (error || stderr) {
+//         resolve({ isLatest: false});
+//         return;
+//       }
+//       console.log(stdout,'stdout',name)
+//       try {
+//         const outdatedInfo = JSON.parse(stdout.trim());
+//         const isLatest = outdatedInfo[name]?.isLatest || false;
+//         const compareResult = semver.compare(outdatedInfo[name]?.current, outdatedInfo[name]?.latest);
+//         console.log(compareResult,'compareResult')
+//         resolve({ isLatest, compareResult, currentClean: outdatedInfo[name]?.current });
+//       } catch (parseError) {
+//         console.log('error')
+//         resolve({ isLatest: false,  });
+//       }
+//     });
+//   });
+// }
+
 export {
   findLatestVersionsAndUrls,
-  querySinglePackageInfo // 可选导出：方便单独查询单个包
+  querySinglePackageInfo, // 可选导出：方便单独查询单个包
+  // compareVersionIsLatest
 };

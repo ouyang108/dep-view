@@ -10,36 +10,20 @@
                     <!-- px-4 py-2   transition-colors flex items-center-->
                     <button id="show-list-btn"
                         :class="[currentView === 'list' ? 'bg-primary text-white hover:bg-primary/90' : '', 'px-4 py-2  transition-colors flex items-center']"
-                        @click="show('list')">
+                       >
                         包列表
                     </button>
-                    <button id="show-graph-btn"
-                        :class="[currentView === 'dependencyGraph' ? 'bg-primary text-white hover:bg-primary/90' : '', 'px-4 py-2  transition-colors flex items-center']"
-                        @click="show('dependencyGraph')">
-                        依赖图
-                    </button>
+                   
                 </div>
             </div>
         </div>
     </header>
 </template>
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-const router = useRouter()
+// import { useRouter } from 'vue-router'
+// const router = useRouter()
 
 const currentView = ref('list')
-const show = (view: string) => {
-    // 切换到依赖图视图
-    if (currentView.value === view) {
-        return
-    }
-    currentView.value = view
-    if (view === 'list') {
-        router.push('/')
-    } else {
-        router.push(view)
-    }
 
-}
 </script>
 <style lang='scss' scoped></style>

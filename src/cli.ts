@@ -6,7 +6,7 @@ import fs from "node:fs";
 import cac from "cac";
 import { keyword } from "./constant/index.js";
 import type { DependencyVersion } from './types'
-import { getVersionInfo } from "./utils/cliUtils.js";
+import { getDependenciesWithVersions, getVersionInfo } from "./utils/cliUtils.js";
 import { createHostServer } from "./server.js";
 
 const cli = cac("dep-view");
@@ -35,6 +35,9 @@ cli.command('depth',"深度查询依赖，会列出所有依赖的依赖").actio
    if(currentDependenciesVersions.length === 0) {
     try {
       latestVersions = (await getVersionInfo(packageJson)).dependenciesVersions;
+      // 查找所有依赖的依赖
+      latestVersions = await getDependenciesWithVersions(latestVersions);
+      // console.log(latestVersions,'所有依赖的依赖');
       //单独做处理
       createHostServer(latestVersions)
     } catch (error) {

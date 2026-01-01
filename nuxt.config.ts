@@ -3,9 +3,11 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   modules: ['@nuxt/icon'],
+
   devServer:{
     port: 3001,
     // 代理
+   
   },
   css: ['~/assets/css/main.css'],
   devtools: { enabled: true },
@@ -31,5 +33,15 @@ export default defineNuxtConfig({
     plugins: [
             tailwindcss(),
         ],
+      // 代理
+      server: {
+        proxy: {
+          '/message': {
+            target: 'http://localhost:3000',
+            changeOrigin: true,     
+            rewrite: (path) => path.replace(/^\/message/, ''),
+          },
+        },
+      },
   },
 })

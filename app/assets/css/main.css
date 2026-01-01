@@ -5,6 +5,13 @@
     --color-warning: #F59E0B;
     --color-danger: #EF4444;
  
+    --color-neutral-100: '#F3F4F6',
+    --color-neutral-200: '#E5E7EB',
+    --color-neutral-300: '#D1D5DB',
+    --color-neutral-700: '#374151',
+    --color-neutral-800: '#1F2937',
+    --color-neutral-900: '#111827',
+ 
 }
 @layer utilities  {
     .pkg-active {
@@ -14,4 +21,5 @@
 body {
     background-color: #f5f5f5;
     height: 100vh;
+    overflow: hidden;
 }
