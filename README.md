@@ -1,75 +1,177 @@
-# Nuxt Minimal Starter
+# Dep-View - 包依赖管理工具
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+一个强大的包依赖管理工具，帮助开发者可视化管理项目依赖关系。
 
-## Setup
+## 功能特性
 
-Make sure to install dependencies:
+- 📦 **依赖列表视图** - 清晰展示项目所有依赖包
+- 🕸️ **依赖关系图** - 可视化展示包之间的依赖关系
+- 🔄 **数据刷新** - 一键刷新获取最新依赖信息
+- 📊 **报告导出** - 支持导出依赖报告
+- 🎨 **现代化UI** - 基于Nuxt 4 + Tailwind CSS构建
+- ⚡ **高性能** - 使用H3服务器，快速响应
+
+## 技术栈
+
+- **前端框架**: Nuxt 4.2.2
+- **UI框架**: Vue 3.5.26
+- **样式方案**: Tailwind CSS 3.4.19
+- **服务器**: H3 2.0.1-rc.6
+- **构建工具**: Vite 7.3.0
+- **CLI工具**: CAC 6.7.14
+
+## 安装
 
 ```bash
-# npm
+# 克隆项目
+git clone <repository-url>
+cd dep-view
+
+# 安装依赖
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+## 使用方法
 
-Start the development server on `http://localhost:3000`:
+### CLI命令
 
 ```bash
-# npm
+# 启动依赖查询服务
+dep-view depth
+```
+
+该命令会：
+1. 分析当前项目的依赖关系
+2. 启动H3服务器（默认端口3000）
+3. 提供Web界面访问依赖信息
+
+### 开发模式
+
+```bash
+# 启动Nuxt开发服务器
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+访问 http://localhost:3001 查看开发界面
 
-Build the application for production:
+### 生产构建
 
 ```bash
-# npm
+# 构建项目
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
+构建完成后会生成：
+- `dist/cli.mjs` - CLI可执行文件
+- `dist/public/` - 静态网站文件
+
+### 预览生产构建
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+# 使用CLI启动服务
+node dist/cli.mjs depth
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+访问 http://localhost:3000 查看生产环境界面
+
+## 项目结构
+
+```
+dep-view/
+├── app/                    # Nuxt应用目录
+│   ├── assets/            # 静态资源
+│   │   └── css/
+│   │       └── main.css   # Tailwind CSS配置
+│   ├── components/        # Vue组件
+│   │   └── AppHeader.vue
+│   ├── pages/            # 页面
+│   │   └── index.vue
+│   └── app.vue           # 根组件
+├── src/                  # 源代码
+│   ├── cli.ts           # CLI入口
+│   └── server.ts        # H3服务器
+├── dist/                # 构建输出
+├── nuxt.config.ts      # Nuxt配置
+├── tsdown.config.ts    # tsdown配置
+└── package.json
+```
+
+## 配置说明
+
+### Nuxt配置
+
+```typescript
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/icon'],
+  css: ['@/assets/css/main.css'],
+  nitro: {
+    preset: 'static',
+    output: {
+      dir: './dist',
+    },
+  },
+})
+```
+
+### Tailwind CSS主题
+
+自定义颜色主题在 `app/assets/css/main.css` 中定义：
+
+```css
+@import "tailwindcss";
+@theme {
+    --color-primary: '#4F46E5'
+    --color-success: '#10B981';
+    --color-warning: '#F59E0B';
+    --color-danger: '#EF4444';
+}
+```
+
+## API接口
+
+### GET /message
+
+返回示例数据：
+
+```json
+{
+  "message": "hello world"
+}
+```
+
+## 开发说明
+
+### 添加新页面
+
+在 `app/pages/` 目录下创建新的 `.vue` 文件，Nuxt会自动生成路由。
+
+### 添加组件
+
+在 `app/components/` 目录下创建组件，可以在任何页面中直接使用。
+
+### 修改样式
+
+编辑 `app/assets/css/main.css` 来修改Tailwind CSS配置和自定义样式。
+
+## 常见问题
+
+### Q: 为什么使用自定义H3服务器而不是Nuxt预览服务？
+
+A: 自定义H3服务器提供了更灵活的路由控制和静态资源处理，特别适合CLI工具的场景。
+
+### Q: 如何修改服务器端口？
+
+A: 在 `src/server.ts` 中修改 `serve(app, { port: 3000 })` 的端口号。
+
+### Q: 如何添加新的API接口？
+
+A: 在 `src/server.ts` 中使用 `app.get()` 或 `app.use()` 添加新的路由处理函数。
+
+## 许可证
+
+MIT
+
+## 贡献
+
+欢迎提交Issue和Pull Request！
