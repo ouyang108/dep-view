@@ -14,7 +14,7 @@ const createHostServer = (latestVersions: DependencyVersion[]) => {
 
  
 app.use('/message/**', eventHandler(() => {
-    console.log('message',latestVersions)
+    // console.log('message',latestVersions)
     return {
       code:200,
       message: latestVersions

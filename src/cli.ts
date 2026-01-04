@@ -31,27 +31,31 @@ if (!packageJson[keyword.De_pendencies] && !packageJson[keyword.Dev_Dependencies
 // 全局变量记录
 let currentDependenciesVersions: { name: string; version: string | undefined; }[] = [];
 let latestVersions: DependencyVersion[] = [];
-cli.command('depth',"深度查询依赖，会列出所有依赖的依赖").action(async () => {
-   if(currentDependenciesVersions.length === 0) {
+// cli.command('depth',"深度查询依赖，会列出所有依赖的依赖").action(async () => {
+//    if(currentDependenciesVersions.length === 0) {
+//     try {
+//       latestVersions = (await getVersionInfo(packageJson)).dependenciesVersions;
+//       // 查找所有依赖的依赖
+//       latestVersions = await getDependenciesWithVersions(latestVersions);
+//       // console.log(latestVersions,'所有依赖的依赖');
+//       //单独做处理
+//       createHostServer(latestVersions)
+//     } catch (error) {
+//       console.log(chalk.red("获取依赖版本信息失败"));
+//       process.exit(1);
+//     }
+//    }
+// })
+cli
+  .command('', '查询依赖版本信息，会列出依赖的直接依赖')
+  .action(async () => {
+   console.log('all')
     try {
       latestVersions = (await getVersionInfo(packageJson)).dependenciesVersions;
       // 查找所有依赖的依赖
       latestVersions = await getDependenciesWithVersions(latestVersions);
       // console.log(latestVersions,'所有依赖的依赖');
       //单独做处理
-      createHostServer(latestVersions)
-    } catch (error) {
-      console.log(chalk.red("获取依赖版本信息失败"));
-      process.exit(1);
-    }
-   }
-})
-cli
-  .command('', '查询依赖版本信息，只列出直接依赖')
-  .action(async () => {
-   console.log('all')
-    try {
-      latestVersions = (await getVersionInfo(packageJson)).dependenciesVersions;
       createHostServer(latestVersions)
     } catch (error) {
       console.log(chalk.red("获取依赖版本信息失败"));
